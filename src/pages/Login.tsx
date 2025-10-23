@@ -33,9 +33,7 @@ const Login = () => {
   });
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/dashboard");
-    }
+    if (isAuthenticated) navigate("/dashboard");
   }, [isAuthenticated, navigate]);
 
   const onSubmit = async (data: LoginFormData) => {
@@ -48,7 +46,7 @@ const Login = () => {
       } else {
         toast.error("Invalid credentials");
       }
-    } catch (error) {
+    } catch {
       toast.error("Login failed. Please try again.");
     } finally {
       setIsLoading(false);
@@ -56,27 +54,30 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-subtle p-32">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-subtle px-4 sm:px-6 md:px-10 lg:px-20 py-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
+        className="w-full max-w-md"
       >
-        <Card className="w-full max-w-md p-8 shadow-xl">
+        <Card className="p-6 sm:p-8 shadow-xl rounded-2xl bg-card backdrop-blur-md">
           <motion.div
-            className="flex flex-col items-center mb-8"
+            className="flex flex-col items-center mb-8 text-center"
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, duration: 0.3 }}
           >
-            <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mb-4">
-              <Building2 className="w-8 h-8 text-primary-foreground" />
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mb-4">
+              <Building2 className="w-7 h-7 sm:w-8 sm:h-8 text-primary-foreground" />
             </div>
-            <h1 className="text-3xl font-bold text-foreground">Gozade Estate</h1>
-            <p className="text-muted-foreground mt-2">Sign in to your account</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Gozade Estate</h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-2">
+              Sign in to your account
+            </p>
           </motion.div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 sm:space-y-8">
             <motion.div
               className="space-y-2"
               initial={{ opacity: 0, x: -20 }}
@@ -90,7 +91,7 @@ const Login = () => {
                   id="email"
                   type="email"
                   placeholder="admin@estate.com"
-                  className="pl-10"
+                  className="pl-10 text-sm sm:text-base"
                   {...register("email")}
                 />
               </div>
@@ -112,7 +113,7 @@ const Login = () => {
                   id="password"
                   type="password"
                   placeholder="••••••••"
-                  className="pl-10"
+                  className="pl-10 text-sm sm:text-base"
                   {...register("password")}
                 />
               </div>
@@ -126,7 +127,11 @@ const Login = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.3 }}
             >
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button
+                type="submit"
+                className="w-full text-sm sm:text-base py-2 sm:py-3"
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -140,12 +145,12 @@ const Login = () => {
           </form>
 
           <motion.div
-            className="mt-6 text-center text-sm text-muted-foreground"
+            className="mt-6 text-center text-xs sm:text-sm text-muted-foreground"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.3 }}
           >
-            <p>Demo credentials: use any email and password </p>
+            <p>Demo credentials: use any email and password</p>
           </motion.div>
         </Card>
       </motion.div>

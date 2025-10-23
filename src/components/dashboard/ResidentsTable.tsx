@@ -76,10 +76,11 @@ export const ResidentsTable = ({
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-4">
+      {/* Header Controls */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
           <Select value={filter} onValueChange={onFilterChange}>
-            <SelectTrigger className="w-48">
+            <SelectTrigger className="w-full sm:w-48">
               <SelectValue placeholder="Filter by type" />
             </SelectTrigger>
             <SelectContent>
@@ -89,109 +90,118 @@ export const ResidentsTable = ({
               <SelectItem value="Staff">Staff</SelectItem>
             </SelectContent>
           </Select>
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-muted-foreground hidden sm:inline-block">
             {residents.length} {residents.length === 1 ? "entry" : "entries"}
           </span>
         </div>
-        <Button onClick={onAdd}>
+        <Button onClick={onAdd} className="w-full sm:w-auto">
           <UserPlus className="w-4 h-4 mr-2" />
           Add Resident
         </Button>
       </div>
 
-      <div className="rounded-lg border border-border bg-card overflow-hidden">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-muted/50">
-              <TableHead>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleSort("name")}
-                  className="font-semibold"
-                >
-                  Name
-                  <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-              </TableHead>
-              <TableHead>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleSort("houseNumber")}
-                  className="font-semibold"
-                >
-                  House Number
-                  <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-              </TableHead>
-              <TableHead>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleSort("accessType")}
-                  className="font-semibold"
-                >
-                  Access Type
-                  <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-              </TableHead>
-              <TableHead>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleSort("lastVisit")}
-                  className="font-semibold"
-                >
-                  Last Visit
-                  <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-              </TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {sortedResidents.map((resident) => (
-              <TableRow key={resident.id} className="hover:bg-muted/50 transition-colors">
-                <TableCell className="font-medium">{resident.name}</TableCell>
-                <TableCell>{resident.houseNumber}</TableCell>
-                <TableCell>
-                  <Badge variant={getAccessTypeBadgeVariant(resident.accessType)}>
-                    {resident.accessType}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  {format(new Date(resident.lastVisit), "MMM dd, yyyy HH:mm")}
-                </TableCell>
-                <TableCell className="text-right">
-                  <div className="flex justify-end gap-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => onEdit(resident)}
-                    >
-                      <Edit className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => onDelete(resident.id)}
-                    >
-                      <Trash2 className="w-4 h-4 text-destructive" />
-                    </Button>
-                  </div>
-                </TableCell>
+      {/* Responsive Table Container */}
+      <div className="rounded-lg border border-border bg-card overflow-x-auto">
+        <div className="min-w-[700px]">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted/50">
+                <TableHead>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleSort("name")}
+                    className="font-semibold"
+                  >
+                    Name
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </TableHead>
+                <TableHead>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleSort("houseNumber")}
+                    className="font-semibold"
+                  >
+                    House Number
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </TableHead>
+                <TableHead>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleSort("accessType")}
+                    className="font-semibold"
+                  >
+                    Access Type
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </TableHead>
+                <TableHead>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleSort("lastVisit")}
+                    className="font-semibold"
+                  >
+                    Last Visit
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </TableHead>
+                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
-            ))}
-            {sortedResidents.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                  No residents found
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {sortedResidents.map((resident) => (
+                <TableRow
+                  key={resident.id}
+                  className="hover:bg-muted/50 transition-colors"
+                >
+                  <TableCell className="font-medium">{resident.name}</TableCell>
+                  <TableCell>{resident.houseNumber}</TableCell>
+                  <TableCell>
+                    <Badge variant={getAccessTypeBadgeVariant(resident.accessType)}>
+                      {resident.accessType}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    {format(new Date(resident.lastVisit), "MMM dd, yyyy HH:mm")}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex justify-end gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onEdit(resident)}
+                      >
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onDelete(resident.id)}
+                      >
+                        <Trash2 className="w-4 h-4 text-destructive" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+              {sortedResidents.length === 0 && (
+                <TableRow>
+                  <TableCell
+                    colSpan={5}
+                    className="text-center py-8 text-muted-foreground"
+                  >
+                    No residents found
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );
