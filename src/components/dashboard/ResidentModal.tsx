@@ -86,7 +86,7 @@ export const ResidentModal = ({
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
-            <Input id="name" {...register("name")} placeholder="John Doe" />
+            <Input id="name" {...register("name")} placeholder="Enter Resident Name" />
             {errors.name && (
               <p className="text-sm text-destructive">{errors.name.message}</p>
             )}
@@ -97,7 +97,7 @@ export const ResidentModal = ({
             <Input
               id="houseNumber"
               {...register("houseNumber")}
-              placeholder="A-101"
+              placeholder="e.g. A-101"
             />
             {errors.houseNumber && (
               <p className="text-sm text-destructive">
