@@ -13,7 +13,7 @@ A modern, responsive estate management application built with React, TypeScript,
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Purpose11/gozade-estate
+   git clone https://github.com/Purpose11/gozade-estate.git
    cd gozade-estate
    ```
 
